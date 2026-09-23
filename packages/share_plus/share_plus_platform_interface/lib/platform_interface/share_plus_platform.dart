@@ -145,6 +145,21 @@ class ShareParams {
   ///   Parameter ignored on other platforms.
   final List<CupertinoActivityType>? excludedCupertinoActivities;
 
+  /// How AirDrop should deliver [uri] on iOS.
+  ///
+  /// * [ShareAirDropAs.inherit] keeps the current URI share (raw `NSURL`,
+  ///   Safari / page preview on the sheet).
+  /// * [ShareAirDropAs.url] wraps the URI like a text share so the host app
+  ///   icon stays in the header, and AirDrop / Messages receive the URL.
+  /// * [ShareAirDropAs.text] sends the URI string as plain text (Notes).
+  ///
+  /// Android has no AirDrop. [uri] + [title] already go out as EXTRA_TEXT /
+  /// EXTRA_TITLE (Nearby Share equivalent). This parameter is ignored there.
+  ///
+  /// * Supported platforms: iOS
+  ///   Parameter ignored on other platforms.
+  final ShareAirDropAs airDrop;
+
   ShareParams({
     this.text,
     this.subject,
@@ -157,6 +172,7 @@ class ShareParams {
     this.downloadFallbackEnabled = true,
     this.mailToFallbackEnabled = true,
     this.excludedCupertinoActivities,
+    this.airDrop = ShareAirDropAs.inherit,
   });
 }
 
@@ -222,6 +238,18 @@ enum ShareResultStatus {
 ///
 /// See also:
 /// [UIActivity.ActivityType](https://developer.apple.com/documentation/uikit/uiactivity/activitytype)
+/// How iOS AirDrop should deliver a shared [ShareParams.uri].
+enum ShareAirDropAs {
+  /// Keep the current URI-share behaviour (raw URL item).
+  inherit,
+
+  /// Deliver the URI as a URL (opens the link instead of Notes).
+  url,
+
+  /// Deliver the URI string as plain text.
+  text,
+}
+
 enum CupertinoActivityType {
   postToFacebook,
   postToTwitter,

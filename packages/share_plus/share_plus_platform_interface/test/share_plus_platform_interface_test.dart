@@ -58,6 +58,8 @@ void main() {
     await sharePlatform.share(
       ShareParams(
         uri: Uri.parse('https://pub.dev/packages/share_plus'),
+        title: 'Join this circle',
+        airDrop: ShareAirDropAs.url,
         sharePositionOrigin: const Rect.fromLTWH(1.0, 2.0, 3.0, 4.0),
         excludedCupertinoActivities: [CupertinoActivityType.airDrop],
       ),
@@ -65,6 +67,8 @@ void main() {
     verify(
       mockChannel.invokeMethod<String>('share', <String, dynamic>{
         'uri': 'https://pub.dev/packages/share_plus',
+        'title': 'Join this circle',
+        'airDrop': 'url',
         'originX': 1.0,
         'originY': 2.0,
         'originWidth': 3.0,
@@ -223,8 +227,7 @@ class MockMethodChannel extends Mock implements MethodChannel {
   @override
   Future<T?> invokeMethod<T>(String method, [dynamic arguments]) async {
     return super.noSuchMethod(
-          Invocation.method(#invokeMethod, [method, arguments]),
-        )
-        as dynamic;
+      Invocation.method(#invokeMethod, [method, arguments]),
+    ) as dynamic;
   }
 }
