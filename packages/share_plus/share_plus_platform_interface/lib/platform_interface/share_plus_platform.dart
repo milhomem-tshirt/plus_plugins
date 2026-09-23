@@ -43,10 +43,10 @@ class ShareParams {
   /// Messages, Mail, and other text destinations receive this string, while
   /// AirDrop still receives the URL.
   ///
-  /// Can be used together with [files],
-  /// but it depends on the receiving app if they support
-  /// loading files and text from a share action.
-  /// Some apps only support one or the other.
+  /// Can be used together with [files]. On iOS that string is a Messages /
+  /// Mail body only — it is not a second file and does not change the
+  /// share-sheet header. Android puts it in EXTRA_TEXT beside the file.
+  /// Some receiving apps still support only the file or only the text.
   ///
   /// * Supported platforms: All
   final String? text;
@@ -101,7 +101,10 @@ class ShareParams {
   ///   Falls back to sharing the URI as text on other platforms.
   final Uri? uri;
 
-  /// Share multiple files, can be used in combination with [text]
+  /// Share multiple files, can be used in combination with [text].
+  ///
+  /// On iOS, [text] is delivered to Messages and Mail only. Save to Files,
+  /// AirDrop, and the sheet header stay file-only.
   ///
   /// Android supports all natively available MIME types (wildcards like image/*
   /// are also supported) and it's considered best practice to avoid mixing
