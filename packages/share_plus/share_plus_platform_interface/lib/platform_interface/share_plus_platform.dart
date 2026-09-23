@@ -43,10 +43,11 @@ class ShareParams {
   /// Messages, Mail, and other text destinations receive this string, while
   /// AirDrop still receives the URL.
   ///
-  /// Can be used together with [files]. On iOS that string is a Messages /
-  /// Mail body only — it is not a second file and does not change the
-  /// share-sheet header. Android puts it in EXTRA_TEXT beside the file.
-  /// Some receiving apps still support only the file or only the text.
+  /// Can be used together with [files]. On iOS that string is a caption for
+  /// text and multimedia destinations (Messages, Mail, Notes, and other
+  /// share extensions). File destinations (Save to Files, AirDrop, Copy,
+  /// Print, Books, Camera Roll, Markup as PDF) and the sheet header do not
+  /// receive it. Android puts it in EXTRA_TEXT beside the file.
   ///
   /// * Supported platforms: All
   final String? text;
@@ -103,8 +104,9 @@ class ShareParams {
 
   /// Share multiple files, can be used in combination with [text].
   ///
-  /// On iOS, [text] is delivered to Messages and Mail only. Save to Files,
-  /// AirDrop, and the sheet header stay file-only.
+  /// On iOS, [text] goes to text and multimedia destinations. Save to Files,
+  /// AirDrop, Copy, Print, Books, Camera Roll, Markup as PDF, and the sheet
+  /// header stay file-only. Unknown activity types receive [text].
   ///
   /// Android supports all natively available MIME types (wildcards like image/*
   /// are also supported) and it's considered best practice to avoid mixing
