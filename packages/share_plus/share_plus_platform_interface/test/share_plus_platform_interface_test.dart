@@ -58,6 +58,7 @@ void main() {
     await sharePlatform.share(
       ShareParams(
         uri: Uri.parse('https://pub.dev/packages/share_plus'),
+        text: 'Join this circle https://pub.dev/packages/share_plus',
         title: 'Join this circle',
         airDrop: ShareAirDropAs.url,
         sharePositionOrigin: const Rect.fromLTWH(1.0, 2.0, 3.0, 4.0),
@@ -67,6 +68,7 @@ void main() {
     verify(
       mockChannel.invokeMethod<String>('share', <String, dynamic>{
         'uri': 'https://pub.dev/packages/share_plus',
+        'text': 'Join this circle https://pub.dev/packages/share_plus',
         'title': 'Join this circle',
         'airDrop': 'url',
         'originX': 1.0,

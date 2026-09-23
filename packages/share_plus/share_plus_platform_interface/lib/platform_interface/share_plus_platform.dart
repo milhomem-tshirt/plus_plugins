@@ -39,8 +39,9 @@ class SharePlatform extends PlatformInterface {
 class ShareParams {
   /// The text to share
   ///
-  /// Cannot be provided at the same time as [uri],
-  /// as the share method will use one or the other.
+  /// Can be provided with [uri] when [airDrop] is [ShareAirDropAs.url]:
+  /// Messages, Mail, and other text destinations receive this string, while
+  /// AirDrop still receives the URL.
   ///
   /// Can be used together with [files],
   /// but it depends on the receiving app if they support
@@ -94,7 +95,7 @@ class ShareParams {
   ///
   /// On other platforms it behaves like sharing text.
   ///
-  /// Cannot be used in combination with [text].
+  /// Can be used with [text] when [airDrop] is [ShareAirDropAs.url].
   ///
   /// * Supported platforms: iOS, Android
   ///   Falls back to sharing the URI as text on other platforms.
@@ -150,7 +151,8 @@ class ShareParams {
   /// * [ShareAirDropAs.inherit] keeps the current URI share (raw `NSURL`,
   ///   Safari / page preview on the sheet).
   /// * [ShareAirDropAs.url] wraps the URI like a text share so the host app
-  ///   icon stays in the header, and AirDrop / Messages receive the URL.
+  ///   icon stays in the header. AirDrop receives the URL. Messages, Mail,
+  ///   and other destinations receive [text] when it is set.
   /// * [ShareAirDropAs.text] sends the URI string as plain text (Notes).
   ///
   /// Android has no AirDrop. [uri] + [title] already go out as EXTRA_TEXT /
